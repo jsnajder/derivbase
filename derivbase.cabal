@@ -20,7 +20,7 @@ library
     DerivBase,
     DerivBase.DerivPairs,
     DerivBase.DerivSets,
-    DerivBase.LemmaPos
+    DerivBase.Lemma
   -- other-modules:       
   build-depends:       
     base ==4.6.*,
