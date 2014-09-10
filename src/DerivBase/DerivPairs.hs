@@ -3,7 +3,7 @@
  DerivBase.DerivPairs
  (c) 2014 Jan Snajder <jan.snajder@fer.hr>
  
- Assumption: Edge are symmetric.
+ Assumption: Edges are symmetric.
 
 -------------------------------------------------------------------------------}
 
@@ -22,11 +22,11 @@ import Data.List
 import Data.Map (Map)
 import qualified Data.Map as M
 import Data.Maybe
-import DerivBase.LemmaPos
+import DerivBase.Lemma
 
-type DerivPairs lp = Map lp [(lp,Double)]  
+type DerivPairs l = Map l [(l,Double)]  
 
-fromList :: (Ord lp, LemmaPos lp) => [(lp, lp, Double)] -> DerivPairs lp
+fromList :: (Ord l, Lemma l) => [(l, l, Double)] -> DerivPairs l
 fromList = ins M.empty . nub . sym
   where parse (l1:l2:w:_) = ((l1, l2), read w)
         parse _           = error "no parse"
@@ -34,27 +34,26 @@ fromList = ins M.empty . nub . sym
                 M.insertWith (++) l1 [(l2, w)] m)
         sym = concatMap (\x@(w1, w2, w) -> [x, (w2, w1, w)])
 
-toList :: DerivPairs lp -> [(lp, lp, Double)]
+toList :: DerivPairs l -> [(l, l, Double)]
 toList dp = [ (l1, l2, w) | (l1,xs) <- M.toAscList dp, (l2,w) <- xs ]
 
-derivNeighbors :: (Ord lp, LemmaPos lp) => DerivPairs lp -> lp -> [(lp, Double)]
+derivNeighbors :: (Ord l, Lemma l) => DerivPairs l -> l -> [(l, Double)]
 derivNeighbors dp l = sort . fromMaybe [] $ M.lookup l dp
 
-derivSet :: (Ord lp, LemmaPos lp) => DerivPairs lp -> lp -> [lp]
+derivSet :: (Ord l, Lemma l) => DerivPairs l -> l -> [l]
 derivSet dp l = sort . fromMaybe [] $ ((l:) . map fst) <$> M.lookup l dp
 
-sameDerivFamily :: (Ord lp, LemmaPos lp) => 
-  DerivPairs lp -> lp -> lp -> Bool
+sameDerivFamily :: (Ord l, Lemma l) => DerivPairs l -> l -> l -> Bool
 sameDerivFamily dp l1 l2 = not (null ds1) && ds1 == ds2
   where ds1 = derivSet dp l1
         ds2 = derivSet dp l2 
 
-fromFile :: (Ord lp, LemmaPos lp) => FilePath -> IO (DerivPairs lp)
+fromFile :: (Ord l, Lemma l) => FilePath -> IO (DerivPairs l)
 fromFile f = fromList . map (parse . words) . lines <$> readFile f 
-  where parse (l1:l2:w:_) = (lpRead l1, lpRead l2, read w)
+  where parse (l1:l2:w:_) = (readLemma l1, readLemma l2, read w)
         parse _           = error "no parse"
 
-toFile :: (LemmaPos lp) =>  FilePath -> DerivPairs lp -> IO ()
+toFile :: (Lemma l) =>  FilePath -> DerivPairs l -> IO ()
 toFile f = writeFile f . unlines . map showPair . toList
-  where showPair (l1, l2, w) = unwords [lpShow l1, lpShow l2, show w]
+  where showPair (l1, l2, w) = unwords [showLemma l1, showLemma l2, show w]
 
