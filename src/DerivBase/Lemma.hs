@@ -7,7 +7,9 @@
 
 {-# LANGUAGE MultiParamTypeClasses #-}
 
-module DerivBase.Lemma where
+module DerivBase.Lemma 
+  ( Lemma (..)
+  , LP (LP) ) where
 
 class Lemma l where
   readLemma :: String -> l

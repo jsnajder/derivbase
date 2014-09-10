@@ -5,13 +5,11 @@
 
 -------------------------------------------------------------------------------}
 
-module DerivBase 
-  ( module DerivBase.DerivPairs
-  , module DerivBase.DerivSets
-  , module DerivBase.Lemma ) where
+module DerivBase
+  ( module DerivBase.Lemma ) where
 
 --import DerivBase.DerivGraph
-import qualified DerivBase.DerivPairs
-import qualified DerivBase.DerivSets
+--import qualified DerivBase.DerivPairs
+--import qualified DerivBase.DerivSets
 import DerivBase.Lemma
 

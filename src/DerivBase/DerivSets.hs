@@ -16,6 +16,7 @@ module DerivBase.DerivSets
   , sameDerivFamily ) where
 
 import Control.Applicative
+import Data.List
 import Data.Map (Map)
 import qualified Data.Map as M
 import Data.Maybe
@@ -28,7 +29,7 @@ data DerivSets l = DerivSets
 
 fromList :: (Ord l, Lemma l) => [[l]] -> DerivSets l
 fromList lss = DerivSets { isMap = m1, liMap = m2 }
-  where m1 = M.fromList $ zip [1..] lss
+  where m1 = M.fromList . zip [1..] $ map sort lss
         m2 = M.fromList [(l,ix) | (ix,ls) <- zip [1..] lss, l <- ls]
 
 toList :: DerivSets l -> [[l]]
