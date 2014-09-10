@@ -5,14 +5,14 @@
 
 -------------------------------------------------------------------------------}
 
-module DerivBase (
-  module DerivBase.DerivSets,
-  module DerivBase.LemmaPos) 
-where
+module DerivBase 
+  ( module DerivBase.DerivPairs
+  , module DerivBase.DerivSets
+  , module DerivBase.LemmaPos ) where
 
---import DerivBase.DerivPairs
 --import DerivBase.DerivGraph
-import DerivBase.DerivSets
+import qualified DerivBase.DerivPairs
+import qualified DerivBase.DerivSets
 import DerivBase.LemmaPos
 
 ------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ instance Pos POS where
   posRead   = read
   posValues = [toEnum 0..]
 
-load = fromFile "/home/jan/dismods/derivbase/deriv-families/data/DErivBase-v1.4.1-families.txt" :: IO (DerivSets (LP POS))
+--load = DS.fromFile "/home/jan/dismods/derivbase/deriv-families/data/DErivBase-v1.4.1-families.txt" :: IO (DS.DerivSets (LP POS))
 
 -- derivFamily df (LP "Wasser" Nn)
 

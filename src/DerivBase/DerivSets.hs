@@ -11,7 +11,7 @@ module DerivBase.DerivSets
   , toList
   , fromFile
   , toFile
-  , derivFamily
+  , derivSet
   , derivFamilyId
   , sameDerivFamily ) where
 
@@ -34,8 +34,8 @@ fromList lss = DerivSets { isMap = m1, liMap = m2 }
 toList :: DerivSets lp -> [[lp]]
 toList = M.elems . isMap
 
-derivFamily :: (Ord lp, LemmaPos lp) => DerivSets lp -> lp -> [lp]
-derivFamily ds l = 
+derivSet :: (Ord lp, LemmaPos lp) => DerivSets lp -> lp -> [lp]
+derivSet ds l = 
   fromMaybe [] $ M.lookup l (liMap ds) >>= \ix -> M.lookup ix (isMap ds)
 
 derivFamilyId :: (Ord lp, LemmaPos lp) => DerivSets lp -> lp -> Maybe Int
