@@ -6,10 +6,10 @@
 -------------------------------------------------------------------------------}
 
 module DerivBase
-  ( module DerivBase.Lemma ) where
+  ( module DerivBase.LemmaItem ) where
 
 --import DerivBase.DerivGraph
 --import qualified DerivBase.DerivPairs
 --import qualified DerivBase.DerivSets
-import DerivBase.Lemma
+import DerivBase.LemmaItem
 
